@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aura Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="window" id="window">
+    <!-- Titlebar -->
+    <header class="titlebar drag">
+      <div class="avatar" aria-hidden="true">
+        <div class="pulse"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div class="app-title">Aura</div>
+        <div id="status" class="status">Idle</div>
+      </div>
+      <div class="win-controls no-drag">
+        <button class="ctrl" id="settingsBtn" title="Settings">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0-.33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1 .51h.09a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.82.33z"></path></svg>
+        </button>
+        <button class="ctrl" id="minBtn" title="Minimize">–</button>
+        <button class="ctrl" id="closeBtn" title="Close">×</button>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="content">
+      <!-- Quick suggestions -->
+      <div class="suggestions no-drag">
+        <button class="chip" id="readScreenBtn">Read the screen</button>
+        <button class="chip">Find action buttons</button>
+        <button class="chip">Explain this error</button>
+      </div>
+
+      <!-- Chat area -->
+      <div class="chat" id="chat"></div>
+
+      <!-- Input bar -->
+      <div class="inputbar no-drag">
+        <button class="icon" id="micBtn" title="Hold to talk">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mic"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+        </button>
+        <input id="prompt" type="text" placeholder="Ask anything…" autocomplete="off" aria-label="Prompt" />
+        <button class="send" id="sendBtn" title="Send">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </div>
+    </main>
+
+    <!-- Settings Panel -->
+    <div id="settings-panel" class="settings-panel hidden">
+      <div class="settings-header">
+        <h2>Settings</h2>
+        <button id="closeSettingsBtn" class="ctrl">×</button>
+      </div>
+      <div class="settings-content">
+        <div class="control-item">
+          <label for="voiceSelect">Voice</label>
+          <select id="voiceSelect"></select>
+        </div>
+        <div class="control-item">
+          <label for="pitchRange">Pitch</label>
+          <input id="pitchRange" type="range" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <div class="control-item">
+          <label for="rateRange">Rate</label>
+          <input id="rateRange" type="range" min="0.6" max="1.6" step="0.05" value="1">
+        </div>
+        <div class="control-item">
+          <label for="modeSelect">Input Mode</label>
+          <select id="modeSelect">
+            <option value="wake">Wake Word</option>
+            <option value="mic">Mic Only</option>
+            <option value="hybrid" selected>Hybrid</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="themeSelect">Theme</label>
+          <select id="themeSelect">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="opacityRange">UI Opacity</label>
+          <input id="opacityRange" type="range" min="0.4" max="1" step="0.05" value="1">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./renderer.js"></script>
+</body>
+</html>
